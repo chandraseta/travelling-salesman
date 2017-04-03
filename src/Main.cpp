@@ -16,7 +16,7 @@ int main() {
     RCMatrix M(FileName);
     M.getMatrix().write();
     ///////////////// DEBUG ///////////////////////
-    std::cout << std::endl << "Shortest Path: ";
+    //std::cout << std::endl << "Shortest Path: ";
     std::vector<int> shortestPath = M.getShortestPath().top().getPath();
     int numNode = shortestPath.size();
     for (int i=0; i<numNode; i++) {

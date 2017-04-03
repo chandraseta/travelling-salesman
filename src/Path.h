@@ -10,7 +10,7 @@
 class Path {
   public:
     Path();
-    Path& operator=(const Path& P);
+    Path(const Path& P);
     void addNode(int nodeNum, int totalCost);
     std::vector<int> getPath() const;
     int getTotalCost() const;

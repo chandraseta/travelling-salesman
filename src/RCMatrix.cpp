@@ -110,31 +110,33 @@ void RCMatrix::solve() {
   while (!finished) {
     Path currentShortestPath = CurrentTravelPath.top();
     std::vector<int> visited = currentShortestPath.getPath();
-    CurrentTravelPath.pop();
-    int lastVisited = visited.back();
-    RCMatrix AliveNode = createDummy();
-    int travelNode = 0;
-    while (travelNode < visited.size()) {
-      if (travelNode >= 1) {
-        AliveNode.travel(visited.at(travelNode-1), visited.at(travelNode));
-        AliveNode.reduceMatrix();
-      }
-      travelNode += 1;
-    }
-    for (int dest=1; dest<=Dist.getSize(); dest++) {
-      if (AliveNode.Dist.getDist(lastVisited, dest) >= 0) {
-        NumCheckedNode += 1;
-        Path currentCheckedPath = currentShortestPath;
-        RCMatrix PossibleNode = createCopy(AliveNode);
-        PossibleNode.reduceMatrix();
-        int dist = PossibleNode.Dist.getDist(lastVisited, dest);
-        int bound = PossibleNode.getBound();
-        std::cout << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl;
-        currentCheckedPath.addNode(dest, currentCheckedPath.getTotalCost()+dist+bound);
-        CurrentTravelPath.push(currentCheckedPath);
-      }
-    }
     finished = (CurrentTravelPath.top().getPath().size() == Dist.getSize());
+    if (!finished) {
+      CurrentTravelPath.pop();
+      int lastVisited = visited.back();
+      RCMatrix AliveNode = createDummy();
+      int travelNode = 0;
+      while (travelNode < visited.size()) {
+        if (travelNode >= 1) {
+          AliveNode.travel(visited.at(travelNode-1), visited.at(travelNode));
+          AliveNode.reduceMatrix();
+        }
+        travelNode += 1;
+      }
+      for (int dest=1; dest<=Dist.getSize(); dest++) {
+        if (AliveNode.Dist.getDist(lastVisited, dest) >= 0) {
+          NumCheckedNode += 1;
+          Path currentCheckedPath(currentShortestPath); 
+          RCMatrix PossibleNode = createCopy(AliveNode);
+          PossibleNode.reduceMatrix();
+          int dist = PossibleNode.Dist.getDist(lastVisited, dest);
+          int bound = PossibleNode.getBound();
+          //std::cout << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl;
+          currentCheckedPath.addNode(dest, currentCheckedPath.getTotalCost()+dist+bound);
+          CurrentTravelPath.push(currentCheckedPath);
+        }
+      }
+    }
   }
 }
 

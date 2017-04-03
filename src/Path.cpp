@@ -8,12 +8,11 @@ Path::Path() {
   TotalCost = 0;
 }
 
-Path& Path::operator=(const Path& P) {
+Path::Path(const Path& P) {
   for (int i=0; i<P.TravelPath.size(); i++) {
     TravelPath.push_back(P.TravelPath.at(i));
   }
   TotalCost = P.TotalCost;
-  return *this;
 }
 
 void Path::addNode(int nodeNum, int totalCost) {
