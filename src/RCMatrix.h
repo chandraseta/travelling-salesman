@@ -25,7 +25,7 @@ class RCMatrix {
     void travel(int orig, int dest);
     void reduceMatrix();
     void solve();
-    std::priority_queue<Path, std::vector<Path>, ComparePath> getShortestPath();
+    Path getShortestPath();
 
   private:
     Matrix Dist;

@@ -147,7 +147,9 @@ void RCMatrix::solve() {
   }
 }
 
-std::priority_queue<Path, std::vector<Path>, ComparePath> RCMatrix::getShortestPath() {
+Path RCMatrix::getShortestPath() {
   solve();
-  return CurrentTravelPath;
+  Path shortestPath(CurrentTravelPath.top());
+  shortestPath.addNode(1, shortestPath.getTotalCost());
+  return shortestPath;
 }

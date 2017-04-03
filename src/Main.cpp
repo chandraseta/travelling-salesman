@@ -17,7 +17,7 @@ int main() {
     M.getMatrix().write();
     ///////////////// DEBUG ///////////////////////
     //std::cout << std::endl << "Shortest Path: ";
-    Path shortestPath = M.getShortestPath().top();
+    Path shortestPath = M.getShortestPath();
     int numNode = shortestPath.getPath().size();
     for (int i=0; i<numNode; i++) {
       std::cout << shortestPath.getPath().at(i) << " ";
