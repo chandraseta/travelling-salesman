@@ -15,8 +15,8 @@ class RCMatrix {
   public:
     RCMatrix();
     RCMatrix(std::string FileName);
+    RCMatrix(const RCMatrix& R);
     RCMatrix createDummy();
-    RCMatrix createCopy(const RCMatrix& R);
     Matrix getMatrix();
     int getBound();
     int getNumCheckedNode();

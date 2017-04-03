@@ -10,7 +10,7 @@
 class ComparePath {
   public:
     bool operator() (Path& P1, Path& P2) {
-        return P1.getTotalCost() >= P2.getTotalCost();
+      return P1.getTotalCost() >= P2.getTotalCost();
     }
 };
 

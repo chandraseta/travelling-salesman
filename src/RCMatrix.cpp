@@ -21,12 +21,10 @@ RCMatrix RCMatrix::createDummy() {
   return Dummy;
 }
 
-RCMatrix RCMatrix::createCopy(const RCMatrix& R) {
-  RCMatrix Copy;
-  Copy.Dist = R.Dist;
-  Copy.Bound = R.Bound;
-  Copy.NumCheckedNode = R.NumCheckedNode;
-  return Copy;
+RCMatrix::RCMatrix(const RCMatrix& R) {
+  Dist = R.Dist;
+  Bound = R.Bound;
+  NumCheckedNode = R.NumCheckedNode;
 }
 
 Matrix RCMatrix::getMatrix() {
@@ -119,19 +117,28 @@ void RCMatrix::solve() {
       while (travelNode < visited.size()) {
         if (travelNode >= 1) {
           AliveNode.travel(visited.at(travelNode-1), visited.at(travelNode));
-          AliveNode.reduceMatrix();
+          if (travelNode < visited.size()-1) {
+            AliveNode.reduceMatrix();
+          }
         }
         travelNode += 1;
       }
       for (int dest=1; dest<=Dist.getSize(); dest++) {
         if (AliveNode.Dist.getDist(lastVisited, dest) >= 0) {
           NumCheckedNode += 1;
-          Path currentCheckedPath(currentShortestPath); 
-          RCMatrix PossibleNode = createCopy(AliveNode);
+          Path currentCheckedPath(currentShortestPath);
+          /////////// DEBUG
+          for (int i=0; i<currentCheckedPath.getPath().size(); i++) {
+            std::cout << currentCheckedPath.getPath().at(i) << " ";
+          }
+          std::cout << dest << std::endl;
+          ////////////////// 
+          RCMatrix PossibleNode(AliveNode);
           PossibleNode.reduceMatrix();
           int dist = PossibleNode.Dist.getDist(lastVisited, dest);
           int bound = PossibleNode.getBound();
-          //std::cout << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl;
+          PossibleNode.getMatrix().write();
+          std::cout << "TOTAL DIST BOUND   " << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl << std::endl;
           currentCheckedPath.addNode(dest, currentCheckedPath.getTotalCost()+dist+bound);
           CurrentTravelPath.push(currentCheckedPath);
         }

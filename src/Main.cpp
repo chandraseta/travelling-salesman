@@ -17,13 +17,13 @@ int main() {
     M.getMatrix().write();
     ///////////////// DEBUG ///////////////////////
     //std::cout << std::endl << "Shortest Path: ";
-    std::vector<int> shortestPath = M.getShortestPath().top().getPath();
-    int numNode = shortestPath.size();
+    Path shortestPath = M.getShortestPath().top();
+    int numNode = shortestPath.getPath().size();
     for (int i=0; i<numNode; i++) {
-      std::cout << shortestPath.at(i) << " ";
+      std::cout << shortestPath.getPath().at(i) << " ";
     }
     std::cout << std::endl;
-    std::cout << "Cost = " << M.getShortestPath().top().getTotalCost() << std::endl;
+    std::cout << "Cost = " << shortestPath.getTotalCost() << std::endl;
     std::cout << "Checked " << M.getNumCheckedNode() << " nodes" << std::endl;
   }
   else if ((FileName.compare("data3.in") == 0) || (FileName.compare("data4.in") == 0)) {
