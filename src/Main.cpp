@@ -25,7 +25,7 @@ int main() {
     std::cout << "Cost = " << shortestPath.getTotalCost() << std::endl;
     std::cout << "Checked " << M.getNumCheckedNode() << " nodes" << std::endl;
   }
-  else if ((FileName.compare("data3.in") == 0) || (FileName.compare("data4.in") == 0)) {
+  else if ((FileName.compare("dataTest3.in") == 0) || (FileName.compare("data4.in") == 0)) {
     std::cout << "Finished loading data" << std::endl;
     std::cout << "Travelling Salesman Problem with Complete Tour" << std::endl;
     CTMatrix M(FileName);
