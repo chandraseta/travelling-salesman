@@ -19,7 +19,7 @@ class CTMatrix {
     double getInitialCost();
     double getCost(int node);
     double getCost(int orig, int dest);
-    double getNodesCost(std::vector<int> visited, int nextNode);
+    double getNodesCost(std::vector<int> visited);
     void solve();
     Path getShortestPath();
 

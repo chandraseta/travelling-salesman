@@ -20,10 +20,11 @@ int CTMatrix::getNumCheckedNode() {
 
 double CTMatrix::getInitialCost() {
   double totalCost = 0;
-  for (int row=1; row<=Dist.getSize(); row++) {
+  int size = Dist.getSize();
+  for (int row=1; row<=size; row++) {
     double min = 0x3f3f3f3f;
     double prevMin = 0x3f3f3f3f;
-    for (int col=1; col<=Dist.getSize(); col++) {
+    for (int col=1; col<=size; col++) {
       if (Dist.getDist(row, col) >= 0) {
         if (Dist.getDist(row, col) < min) {
           prevMin = min;
@@ -41,7 +42,8 @@ double CTMatrix::getInitialCost() {
 
 double CTMatrix::getCost(int orig, int dest) {
   double min = 0x3f3f3f3f;
-  for (int col=1; col<=Dist.getSize(); col++) {
+  int size = Dist.getSize();
+  for (int col=1; col<=size; col++) {
     if ((col != dest) && (Dist.getDist(orig, col) >= 0) && (Dist.getDist(orig, col) < min)) {
       min = Dist.getDist(orig, col);
     }
@@ -54,7 +56,8 @@ double CTMatrix::getCost(int orig, int dest) {
 double CTMatrix::getCost(int node) {
   double min = 0x3f3f3f3f;
   double prevMin = 0x3f3f3f3f;
-  for (int col=1; col<=Dist.getSize(); col++) {
+  int size = Dist.getSize();
+  for (int col=1; col<=size; col++) {
     if ((col != node) && (Dist.getDist(node, col) >= 0)) {
       if (Dist.getDist(node, col) < min) {
         prevMin = min;
@@ -68,20 +71,33 @@ double CTMatrix::getCost(int node) {
   return (min + prevMin);
 }
 
-double CTMatrix::getNodesCost(std::vector<int> visited, int nextNode) {
+double CTMatrix::getNodesCost(std::vector<int> visited) {
   double totalCost = 0;
-  if (visited.size()==0) {
+  if (visited.size()==1) {
     totalCost = 2*getInitialCost();
   }
   else {
-    for (int currentNode=1; currentNode<visited.size() ; currentNode++) {
-      totalCost += getCost(visited.at(currentNode-1), visited.at(currentNode));
-      totalCost += getCost(visited.at(currentNode), nextNode);
-    }
-    for (int node=1; node<Dist.getSize(); node++) {
+    int size = Dist.getSize();
+    int visSize = visited.size();
+    for (int node=1; node<=size; node++) {
+      std::ptrdiff_t index = find(visited.begin(), visited.end(), node) - visited.begin();
+      // Not found in visited
       if (find(visited.begin(), visited.end(), node) == visited.end()) {
         totalCost += getCost(node);
       }
+      else {
+        if (index == 0) {
+          totalCost += getCost(visited.at(index), visited.at(index+1));
+        }
+        else if (index == visSize-1) {
+          totalCost += getCost(visited.at(index), visited.at(index-1));
+        }
+        else {
+          totalCost += Dist.getDist(visited.at(index), visited.at(index-1));
+          totalCost += Dist.getDist(visited.at(index), visited.at(index+1));
+        }
+      }
+      std::cout << "Cost until node " << node << " = " << totalCost << std::endl;
     }
   }
   return totalCost*0.5;
@@ -99,19 +115,22 @@ void CTMatrix::solve() {
     finished = CurrentTravelPath.top().getPath().size() == Dist.getSize();
     if (!finished) {
       CurrentTravelPath.pop();
-      for (int dest=1; dest<=Dist.getSize(); dest++) {
+      int size = Dist.getSize();
+      for (int dest=1; dest<=size; dest++) {
         if ((Dist.getDist(visited.back(), dest) >= 0) && (find(visited.begin(), visited.end(), dest) == visited.end())) {
           NumCheckedNode += 1;
+          std::vector<int> checking = visited;
+          checking.push_back(dest);
           Path currentCheckedPath(currentShortestPath);
-          double newCost = getNodesCost(visited, dest);
-          currentCheckedPath.addNode(dest, newCost);
           /////////// DEBUG
-          for (int i=0; i<currentCheckedPath.getPath().size(); i++) {
-           std::cout << currentCheckedPath.getPath().at(i) << " ";
+          for (int i=0; i<checking.size(); i++) {
+           std::cout << checking.at(i) << " ";
           }
           std::cout << std::endl;
-          std::cout << "TOTAL COST = " << newCost << std::endl << std::endl;
           //////////////////
+          double newCost = getNodesCost(checking);
+          std::cout << "TOTAL COST = " << newCost << std::endl << std::endl;
+          currentCheckedPath.addNode(dest, newCost);
           CurrentTravelPath.push(currentCheckedPath);
         }
       }

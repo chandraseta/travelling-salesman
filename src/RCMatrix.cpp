@@ -39,7 +39,8 @@ int RCMatrix::getNumCheckedNode() {
 
 int RCMatrix::lowestRowDist(int row) {
   int min = 0x3f3f3f3f;
-  for (int i=1; i<=Dist.getSize(); i++) {
+  int size = Dist.getSize();
+  for (int i=1; i<=size; i++) {
     if ((Dist.getDist(row, i) < min) && (Dist.getDist(row, i) >= 0)) {
       min = Dist.getDist(row, i);
     }
@@ -52,7 +53,8 @@ int RCMatrix::lowestRowDist(int row) {
 
 int RCMatrix::lowestColDist(int col) {
   int min = 0x3f3f3f3f;
-  for (int i=1; i<=Dist.getSize(); i++) {
+  int size = Dist.getSize();
+  for (int i=1; i<=size; i++) {
     if ((Dist.getDist(i, col) < min) && (Dist.getDist(i, col) >= 0)) {
       min = Dist.getDist(i, col);
     }
@@ -64,10 +66,11 @@ int RCMatrix::lowestColDist(int col) {
 }
 
 void RCMatrix::travel(int orig, int dest) {
-  for (int col=1; col<=Dist.getSize(); col++) {
+  int size = Dist.getSize();
+  for (int col=1; col<=size; col++) {
     Dist.setDist(orig, col, INF);
   }
-  for (int row=1; row<=Dist.getSize(); row++) {
+  for (int row=1; row<=size; row++) {
     Dist.setDist(row, dest, INF);
   }
   Dist.setDist(dest, 1, INF);
@@ -76,9 +79,10 @@ void RCMatrix::travel(int orig, int dest) {
 void RCMatrix::reduceMatrix() {
   Bound = 0;
   // Reduce every row
-  for (int row=1; row<=Dist.getSize(); row++) {
+  int size = Dist.getSize();
+  for (int row=1; row<=size; row++) {
     int lowDist = lowestRowDist(row);
-    for (int col=1; col<=Dist.getSize(); col++) {
+    for (int col=1; col<=size; col++) {
       if (Dist.getDist(row, col) >= 0) {
         Dist.setDist(row, col, Dist.getDist(row, col) - lowDist);
       }
@@ -86,9 +90,9 @@ void RCMatrix::reduceMatrix() {
     Bound += lowDist;
   }
   // Reduce every column
-  for (int col=1; col<=Dist.getSize(); col++) {
+  for (int col=1; col<=size; col++) {
     int lowDist = lowestColDist(col);
-    for (int row=1; row<=Dist.getSize(); row++) {
+    for (int row=1; row<=size; row++) {
       if (Dist.getDist(row, col) >= 0) {
         Dist.setDist(row, col, Dist.getDist(row, col) - lowDist);
       }
@@ -121,7 +125,8 @@ void RCMatrix::solve() {
         }
         travelNode += 1;
       }
-      for (int dest=1; dest<=Dist.getSize(); dest++) {
+      int size = Dist.getSize();
+      for (int dest=1; dest<=size; dest++) {
         if (AliveNode.Dist.getDist(lastVisited, dest) >= 0) {
           NumCheckedNode += 1;
           Path currentCheckedPath(currentShortestPath);
