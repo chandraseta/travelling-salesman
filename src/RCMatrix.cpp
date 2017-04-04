@@ -2,8 +2,6 @@
 // Author: Rionaldi Chandraseta - 13515077
 // Written on 2017-04-01
 
-#include <algorithm>
-
 #include "RCMatrix.h"
 
 RCMatrix::RCMatrix() {}
@@ -128,17 +126,17 @@ void RCMatrix::solve() {
           NumCheckedNode += 1;
           Path currentCheckedPath(currentShortestPath);
           /////////// DEBUG
-          for (int i=0; i<currentCheckedPath.getPath().size(); i++) {
-            std::cout << currentCheckedPath.getPath().at(i) << " ";
-          }
-          std::cout << dest << std::endl;
-          ////////////////// 
+          //for (int i=0; i<currentCheckedPath.getPath().size(); i++) {
+          // std::cout << currentCheckedPath.getPath().at(i) << " ";
+          //}
+          //std::cout << dest << std::endl;
+          //////////////////
           RCMatrix PossibleNode(AliveNode);
           PossibleNode.reduceMatrix();
-          int dist = PossibleNode.Dist.getDist(lastVisited, dest);
-          int bound = PossibleNode.getBound();
-          PossibleNode.getMatrix().write();
-          std::cout << "TOTAL DIST BOUND   " << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl << std::endl;
+          double dist = (double) PossibleNode.Dist.getDist(lastVisited, dest);
+          double bound = (double) PossibleNode.getBound();
+          //PossibleNode.getMatrix().write();
+          //std::cout << "TOTAL DIST BOUND   " << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl << std::endl;
           currentCheckedPath.addNode(dest, currentCheckedPath.getTotalCost()+dist+bound);
           CurrentTravelPath.push(currentCheckedPath);
         }

@@ -15,7 +15,7 @@ Path::Path(const Path& P) {
   TotalCost = P.TotalCost;
 }
 
-void Path::addNode(int nodeNum, int totalCost) {
+void Path::addNode(int nodeNum, double totalCost) {
   TravelPath.push_back(nodeNum);
   TotalCost = totalCost;
 }
@@ -24,6 +24,6 @@ std::vector<int> Path::getPath() const {
   return TravelPath;
 }
 
-int Path::getTotalCost() const {
+double Path::getTotalCost() const {
   return TotalCost;
 }

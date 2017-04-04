@@ -11,13 +11,13 @@ class Path {
   public:
     Path();
     Path(const Path& P);
-    void addNode(int nodeNum, int totalCost);
+    void addNode(int nodeNum, double totalCost);
     std::vector<int> getPath() const;
-    int getTotalCost() const;
+    double getTotalCost() const;
 
   private:
     std::vector<int> TravelPath;
-    int TotalCost;
+    double TotalCost;
 };
 
 #endif
