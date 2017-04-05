@@ -88,7 +88,7 @@ int main() {
     std::cout << "Shortest path: ";
     int numNode = shortestPath.getPath().size();
     for (int i=0; i<numNode; i++) {
-      std::cout << shortestPath.getPath().at(i) << " ";
+      std::cout << shortestPath.getPath().at(i);
       if (i<numNode-1) {
         std::cout << " -> ";
       }

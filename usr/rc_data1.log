@@ -14,5 +14,5 @@ Finished loading data
 Shortest path: 1 -> 8 -> 3 -> 2 -> 6 -> 4 -> 7 -> 5 -> 1
 Cost = 171
 Checked 29 nodes
-Time taken: 0.502 ms
-GraphViz file generated... graph_rc_data1.gv
+Time taken: 0.491 ms
+GraphViz file generated to ../usr/graph_rc_data1.gv

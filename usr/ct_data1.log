@@ -10,8 +10,8 @@ Finished loading data
   12  64  80  19  59  76 inf  38
   10  32  25  47  41  82  38 inf
 
-Shortest path: 1  -> 7  -> 4  -> 5  -> 2  -> 6  -> 3  -> 8  -> 1 
+Shortest path: 1 -> 7 -> 4 -> 5 -> 2 -> 6 -> 3 -> 8 -> 1 
 Cost = 183
 Checked 122 nodes
-Time taken: 1.499 ms
+Time taken: 1.539 ms
 GraphViz file generated... graph_ct_data1.gv
