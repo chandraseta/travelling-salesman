@@ -130,18 +130,10 @@ void RCMatrix::solve() {
         if (AliveNode.Dist.getDist(lastVisited, dest) >= 0) {
           NumCheckedNode += 1;
           Path currentCheckedPath(currentShortestPath);
-          /////////// DEBUG
-          //for (int i=0; i<currentCheckedPath.getPath().size(); i++) {
-          // std::cout << currentCheckedPath.getPath().at(i) << " ";
-          //}
-          //std::cout << dest << std::endl;
-          //////////////////
           RCMatrix PossibleNode(AliveNode);
           PossibleNode.reduceMatrix();
           double dist = (double) PossibleNode.Dist.getDist(lastVisited, dest);
           double bound = (double) PossibleNode.getBound();
-          //PossibleNode.getMatrix().write();
-          //std::cout << "TOTAL DIST BOUND   " << currentCheckedPath.getTotalCost() << " " << dist << " " << bound << std::endl << std::endl;
           currentCheckedPath.addNode(dest, currentCheckedPath.getTotalCost()+dist+bound);
           CurrentTravelPath.push(currentCheckedPath);
         }

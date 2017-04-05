@@ -48,7 +48,6 @@ double CTMatrix::getCost(int orig, int dest) {
       min = Dist.getDist(orig, col);
     }
   }
-  //std::cout << "O: " << orig << " D:" << dest << " Min: " << min << std::endl;
   double cost = min + Dist.getDist(orig, dest);
   return cost;
 }
@@ -89,9 +88,7 @@ double CTMatrix::getNodesCost(std::vector<int> visited) {
         if (index == 0) {
           if (visSize == Dist.getSize()+1) {
             totalCost += Dist.getDist(visited.at(index), visited.at(visSize-2));
-            //std::cout << "TC1 " << visited.at(index) << " " << visited.at(visSize-1) << " " << totalCost << std::endl;
             totalCost += Dist.getDist(visited.at(index), visited.at(index+1));
-            //std::cout << "TC2 " << totalCost << std::endl;
           }
           else {
             totalCost += getCost(visited.at(index), visited.at(index+1));
@@ -111,7 +108,6 @@ double CTMatrix::getNodesCost(std::vector<int> visited) {
           totalCost += Dist.getDist(visited.at(index), visited.at(index+1));
         }
       }
-      //std::cout << "Cost until node " << node << " = " << totalCost << std::endl;
     }
   }
   return totalCost*0.5;
@@ -136,14 +132,7 @@ void CTMatrix::solve() {
           std::vector<int> checking = visited;
           checking.push_back(dest);
           Path currentCheckedPath(currentShortestPath);
-          /////////// DEBUG
-          //for (int i=0; i<checking.size(); i++) {
-          // std::cout << checking.at(i) << " ";
-          //}
-          //std::cout << std::endl;
-          //////////////////
           double newCost = getNodesCost(checking);
-          //std::cout << "TOTAL COST = " << newCost << std::endl << std::endl;
           currentCheckedPath.addNode(dest, newCost);
           CurrentTravelPath.push(currentCheckedPath);
         }
